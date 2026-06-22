@@ -3,31 +3,107 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --bg:          #07090F;
+  --bg-raised:   #0D1220;
+  --bg-card:     #111827;
+  --line:        rgba(255,255,255,0.07);
+  --accent:      #2563EB;
+  --accent-dim:  rgba(37,99,235,0.12);
+  --text-1:      #EDF2FF;
+  --text-2:      #8896B3;
+  --text-3:      #4A5878;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-attachment: fixed;
+  color: var(--text-1);
+  font-family: var(--font-sans), sans-serif;
+  overflow-x: hidden;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+/* Hide default cursor globally if hideDefaultCursor is true.
+   This class is dynamically toggled by TargetCursor */
+.hide-cursor {
+  cursor: none !important;
+}
+.hide-cursor * {
+  cursor: none !important;
+}
+
+/* Global scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--text-3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-2);
+}
+
+/* Infinite Marquee animations */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 35s linear infinite;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 35s linear infinite;
+}
+
+.hover-pause:hover {
+  animation-play-state: paused !important;
+}
+
+.cta-underline {
+  position: relative;
+}
+.cta-underline::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: currentColor;
+  transform-origin: bottom left;
+  transition: transform 0.25s ease-out;
+}
+.cta-underline:hover::after {
+  transform: scaleX(1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  cursor: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
