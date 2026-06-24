@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, extend, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
-import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
+import { BallCollider, CuboidCollider, Physics, RigidBody, RigidBodyAutoCollider, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
 import { MeshLineGeometry, MeshLineMaterial } from 'meshline';
 import * as THREE from 'three';
 import './Lanyard.css';
@@ -153,7 +153,7 @@ function Band({
   const rot = useMemo(() => new THREE.Vector3(), []);
   const dir = useMemo(() => new THREE.Vector3(), []);
 
-  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
+  const segmentProps = { type: 'dynamic' as const, canSleep: true, colliders: false as unknown as RigidBodyAutoCollider, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(cardGLB) as any;
   const texture = useTexture(lanyardImage || lanyard) as THREE.Texture;
   // useTexture must be called unconditionally; use a blank pixel when an image
@@ -275,10 +275,10 @@ function Band({
           <BallCollider args={[0.1]} />
         </RigidBody>
         <RigidBody position={[2, 0, 0]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
-          <CuboidCollider args={[1.01, 1.42, 0.01]} />
+          <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={2.85}
-            position={[0, -1.52, -0.05]}
+            scale={2.25}
+            position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={e => {
