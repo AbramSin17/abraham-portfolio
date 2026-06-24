@@ -69,6 +69,7 @@ export default function WebARPage() {
     return () => {
       // Revert styles and classes
       document.body.classList.remove("ar-active");
+      document.documentElement.classList.remove("ar-active");
       document.documentElement.classList.remove("a-html");
       document.documentElement.removeAttribute("style");
 
@@ -348,6 +349,7 @@ export default function WebARPage() {
 
       // Add active classes for full screen AR take-over
       document.body.classList.add("ar-active");
+      document.documentElement.classList.add("ar-active");
     } catch (err: any) {
       console.error(err);
       setErrorMsg(err.message || "Terjadi kesalahan saat memproses AR Engine.");
@@ -362,6 +364,7 @@ export default function WebARPage() {
 
     // Remove active styles and body class
     document.body.classList.remove("ar-active");
+    document.documentElement.classList.remove("ar-active");
     if (originalBodyStyleRef.current) {
       document.body.className = originalBodyStyleRef.current.className;
       if (originalBodyStyleRef.current.style) {
@@ -409,6 +412,13 @@ export default function WebARPage() {
         .animate-spin-slow {
           animation: spin-slow 10s linear infinite;
         }
+        html.ar-active, body.ar-active {
+          overflow: hidden !important;
+          height: 100vh !important;
+          width: 100vw !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
         body.ar-active nav {
           display: none !important;
         }
@@ -428,6 +438,7 @@ export default function WebARPage() {
           left: 0 !important;
           width: 100% !important;
           height: 100% !important;
+          margin: 0 !important;
         }
         body.ar-active video {
           z-index: 5 !important;
@@ -437,6 +448,7 @@ export default function WebARPage() {
           width: 100% !important;
           height: 100% !important;
           object-fit: cover !important;
+          margin: 0 !important;
         }
       ` }} />
 
