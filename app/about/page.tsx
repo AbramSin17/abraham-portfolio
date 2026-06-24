@@ -8,17 +8,12 @@ const experienceData = [
   {
     year: "2026",
     title: "GBI Connect",
-    subtitle: "Client Project · Next.js + Supabase",
+    subtitle: "Client Project · Supabase + Vercel + Leaflet.js",
   },
   {
     year: "2025",
     title: "UMKMInsight",
-    subtitle: "Competition · Python + Gemini AI",
-  },
-  {
-    year: "2025",
-    title: "Plaza Millenium Churn Prediction",
-    subtitle: "Thesis Project · XGBoost + SMOTE",
+    subtitle: "Competition · FastAPI + Gemini AI",
   },
 ];
 
@@ -30,7 +25,7 @@ const educationData = [
   },
   {
     year: "2020–2023",
-    title: "SMA Negeri 1 (IPA)",
+    title: "SMA Budi Murni 01 Medan",
     subtitle: "Science Major",
   },
 ];
@@ -116,7 +111,7 @@ export default function AboutPage() {
             {/* Avatar Profile */}
             <div className="-mt-10 ml-4 relative z-10 w-20 h-20 rounded-full border-2 border-text-1 overflow-hidden bg-bg-raised">
               <img
-                src="/avatar.jpg"
+                src="/abram.jpeg"
                 alt="Abraham avatar"
                 className="w-full h-full object-cover"
                 onError={(e) => {

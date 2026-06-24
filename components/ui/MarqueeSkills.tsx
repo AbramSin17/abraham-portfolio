@@ -3,28 +3,28 @@
 import React from "react";
 
 const row1 = [
+  { name: "Python", icon: "🐍" },
+  { name: "JavaScript", icon: "JS" },
+  { name: "PHP", icon: "PHP" },
+  { name: "C#", icon: "C#" },
+  { name: "HTML/CSS", icon: "🎨" },
   { name: "React", icon: "⚛️" },
   { name: "Next.js", icon: "▲" },
-  { name: "TypeScript", icon: "TS" },
-  { name: "Tailwind", icon: "TW" },
-  { name: "Supabase", icon: "⚡" },
-  { name: "Python", icon: "🐍" },
+  { name: "Chart.js", icon: "📊" },
   { name: "FastAPI", icon: "FA" },
-  { name: "PostgreSQL", icon: "🐘" },
+  { name: "Node.js", icon: "Node" },
 ];
 
 const row2 = [
-  { name: "Unity", icon: "🎮" },
-  { name: "AR Foundation", icon: "AR" },
-  { name: "A-Frame", icon: "AF" },
-  { name: "Figma", icon: "🎨" },
-  { name: "Canva", icon: "CV" },
-  { name: "CapCut", icon: "🎬" },
+  { name: "Supabase", icon: "⚡" },
+  { name: "PHP Native", icon: "🐘" },
+  { name: "XGBoost", icon: "ML" },
+  { name: "SMOTE", icon: "ML" },
+  { name: "Google Gemini API", icon: "🤖" },
   { name: "Git", icon: "Git" },
+  { name: "Unity", icon: "🎮" },
   { name: "Vercel", icon: "▲" },
-  { name: "Word", icon: "W" },
-  { name: "Excel", icon: "X" },
-  { name: "PowerPoint", icon: "P" },
+  { name: "VS Code", icon: "VS" },
 ];
 
 export default function MarqueeSkills() {

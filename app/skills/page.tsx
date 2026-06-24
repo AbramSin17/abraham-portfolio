@@ -11,13 +11,11 @@ interface Category {
 }
 
 const categories: Category[] = [
-  { name: "Design", skills: "Figma · Canva · Adobe XD" },
-  { name: "Video Editing", skills: "CapCut · DaVinci Resolve" },
-  { name: "Microsoft Office", skills: "Word · PowerPoint · Excel" },
-  { name: "Frontend", skills: "React · Next.js · TypeScript · Tailwind CSS · HTML/CSS" },
-  { name: "Backend", skills: "Node.js · Python · FastAPI · Supabase · PostgreSQL" },
-  { name: "AR/VR", skills: "Unity · AR Foundation · A-Frame" },
-  { name: "DevTools", skills: "Git · GitHub · VS Code · Postman · Vercel" },
+  { name: "Languages", skills: "Python · JavaScript · PHP · C#" },
+  { name: "Frontend", skills: "HTML/CSS · React · Next.js · Chart.js" },
+  { name: "Backend", skills: "FastAPI · Node.js · Supabase · PHP Native" },
+  { name: "ML/AI", skills: "XGBoost · SMOTE · Google Gemini API" },
+  { name: "Tools", skills: "Git · Unity · Vercel · VS Code" },
 ];
 
 export default function SkillsPage() {
