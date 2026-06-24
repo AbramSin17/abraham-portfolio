@@ -38,8 +38,8 @@ const socialCards: SocialCard[] = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/abraham",
-    handle: "linkedin.com/in/abraham",
+    url: "https://linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323",
+    handle: "linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323",
     icon: (
       <svg
         className="w-5 h-5 text-text-2 group-hover:text-accent transition-colors duration-150 fill-current"
@@ -51,8 +51,8 @@ const socialCards: SocialCard[] = [
   },
   {
     name: "Instagram",
-    url: "https://instagram.com/abraham_dev",
-    handle: "@abraham_dev",
+    url: "https://www.instagram.com/abrhm_sin17",
+    handle: "@abrhm_sin17",
     icon: (
       <svg
         className="w-5 h-5 text-text-2 group-hover:text-accent transition-colors duration-150"

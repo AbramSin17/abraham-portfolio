@@ -5,6 +5,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import LiquidEther from "@/components/LiquidEther";
 import CVModal from "@/components/CVModal";
+import dynamic from "next/dynamic";
+
+const Lanyard = dynamic(() => import("@/components/ui/Lanyard"), { ssr: false });
 
 const rotatingWords = ["web systems", "mobile apps", "AR experiences", "digital tools"];
 const nameText = "Abraham";
@@ -65,7 +68,7 @@ export default function Home() {
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-64px)] w-full flex flex-col justify-center px-6 pl-12 md:pl-16 pr-6 md:pr-12 py-16 overflow-hidden z-10 select-none">
+    <div className="relative min-h-[calc(100vh-64px)] w-full flex flex-col lg:flex-row items-center justify-center px-6 pl-12 md:pl-16 lg:pl-24 pr-6 md:pr-12 lg:pr-24 py-16 overflow-hidden z-10 select-none gap-8 lg:gap-16 w-full max-w-none">
       {/* Dynamic full-screen shader background */}
       <LiquidEther
         colors={["#0D1220", "#1E3A5F", "#2563EB", "#0D1220"]}
@@ -108,7 +111,7 @@ export default function Home() {
       `}</style>
 
       {/* Hero Content Area */}
-      <div className="relative z-10 flex flex-col max-w-[600px] pointer-events-auto">
+      <div className="relative z-10 flex flex-col max-w-[600px] w-full pointer-events-auto flex-1">
         {/* 1. Eyebrow */}
         <motion.p
           custom={0.1}
@@ -130,9 +133,8 @@ export default function Home() {
         >
           {typedName}
           <span
-            className={`font-sans font-light text-accent text-5xl md:text-7xl ml-1 ${
-              showCursor ? "opacity-100" : "opacity-0"
-            }`}
+            className={`font-sans font-light text-accent text-5xl md:text-7xl ml-1 ${showCursor ? "opacity-100" : "opacity-0"
+              }`}
             style={{ transition: "opacity 0.15s ease" }}
           >
             |
@@ -196,6 +198,16 @@ export default function Home() {
             OPEN CV <span>↗</span>
           </button>
         </motion.div>
+      </div>
+
+      {/* Lanyard 3D Card Area */}
+      <div className="relative w-full lg:w-[500px] xl:w-[600px] h-[450px] lg:h-[650px] z-20 flex items-center justify-center pointer-events-auto flex-1">
+        <Lanyard
+          position={[0, 0, 20]}
+          gravity={[0, -40, 0]}
+          frontImage="/abram.jpeg"
+          imageFit="cover"
+        />
       </div>
 
       {/* Curriculum Vitae Modal */}

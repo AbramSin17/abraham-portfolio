@@ -29,7 +29,7 @@ export default function Navbar() {
           </svg>
         </a>
         <a
-          href="https://linkedin.com/in/abrahamseputra"
+          href="https://www.linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323"
           target="_blank"
           rel="noopener noreferrer"
           className="text-text-2 hover:text-text-1 transition-opacity duration-150 cursor-target opacity-50 hover:opacity-100 flex items-center justify-center"
