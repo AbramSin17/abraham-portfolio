@@ -45,6 +45,9 @@ export default function WebARPage() {
   // Reference to the container div for injected A-Frame scene to avoid React unmount conflicts
   const arContainerRef = useRef<HTMLDivElement>(null);
 
+  // Reference for delaying video play to match entrance animation
+  const videoTimeoutRef = useRef<any>(null);
+
   // Avoid hydration issues by waiting for client-side mounting
   useEffect(() => {
     setIsMounted(true);
@@ -52,8 +55,32 @@ export default function WebARPage() {
 
   // Listen to the custom window events triggered by our A-Frame component
   useEffect(() => {
-    const handleFound = () => setMarkerDetected(true);
-    const handleLost = () => setMarkerDetected(false);
+    const handleFound = () => {
+      setMarkerDetected(true);
+      const video = document.querySelector("#intro-video") as HTMLVideoElement;
+      if (video) {
+        // Reset and pause immediately, clear any active timeouts
+        video.currentTime = 0;
+        video.pause();
+        if (videoTimeoutRef.current) {
+          clearTimeout(videoTimeoutRef.current);
+        }
+        // Delay playing to match the 1400ms entry animation delay
+        videoTimeoutRef.current = setTimeout(() => {
+          video.play().catch(e => console.log("Video play failed", e));
+        }, 1400);
+      }
+    };
+    const handleLost = () => {
+      setMarkerDetected(false);
+      if (videoTimeoutRef.current) {
+        clearTimeout(videoTimeoutRef.current);
+      }
+      const video = document.querySelector("#intro-video") as HTMLVideoElement;
+      if (video) {
+        video.pause();
+      }
+    };
 
     window.addEventListener("ar-marker-found", handleFound);
     window.addEventListener("ar-marker-lost", handleLost);
@@ -61,6 +88,9 @@ export default function WebARPage() {
     return () => {
       window.removeEventListener("ar-marker-found", handleFound);
       window.removeEventListener("ar-marker-lost", handleLost);
+      if (videoTimeoutRef.current) {
+        clearTimeout(videoTimeoutRef.current);
+      }
     };
   }, []);
 
@@ -99,6 +129,20 @@ export default function WebARPage() {
       const handleSceneClick = (e: MouseEvent) => {
         const target = e.target as HTMLElement;
         const clickable = target.closest(".clickable");
+
+        // Handle clicking on the video screen to play/pause
+        if (clickable && clickable.id === "video-screen") {
+          const video = container.querySelector("#intro-video") as HTMLVideoElement;
+          if (video) {
+            if (video.paused) {
+              video.play().catch(err => console.error("Gagal memutar video:", err));
+            } else {
+              video.pause();
+            }
+          }
+          return;
+        }
+
         const actionUrl = clickable?.getAttribute("data-url");
         if (actionUrl) {
           window.open(actionUrl, "_blank");
@@ -118,6 +162,18 @@ export default function WebARPage() {
           arjs="sourceType: webcam; debugUIEnabled: false;"
           vr-mode-ui="enabled: false"
         >
+          <!-- Preload Assets -->
+          <a-assets timeout="5000">
+            <video
+              id="intro-video"
+              src="https://res.cloudinary.com/dymyn9h0m/video/upload/v1782321355/ADM_PERKENALAN_VIDEO_ABRAHAM_spqe7o.mp4"
+              preload="auto"
+              crossorigin="anonymous"
+              playsinline
+              webkit-playsinline
+            ></video>
+          </a-assets>
+
           <!-- Raycaster cursor to enable clicking on 3D elements -->
           <a-entity cursor="rayOrigin: mouse" raycaster="objects: .clickable"></a-entity>
 
@@ -132,7 +188,8 @@ export default function WebARPage() {
               position="0 0.02 -0.1"
               rotation="-90 90 -90"
               scale="0 0 0"
-              animation="property: scale; from: 0 0 0; to: 1.5 1.5 1.5; dur: 1000; easing: easeOutBack; delay: 300"
+              animation__in="property: scale; from: 0 0 0; to: 1.5 1.5 1.5; dur: 1000; easing: easeOutBack; delay: 200; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             ></a-gltf-model>
 
             <!-- ====== HOLOGRAPHIC CONCENTRIC RINGS (BASE) ====== -->
@@ -142,7 +199,10 @@ export default function WebARPage() {
               radius-inner="0.75"
               radius-outer="0.77"
               color="#10B981"
+              scale="0 0 0"
               material="shader: flat; opacity: 0.6; transparent: true; depthWrite: false"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 0; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             ></a-ring>
             <a-ring
               position="0 0.02 -0.1"
@@ -150,7 +210,10 @@ export default function WebARPage() {
               radius-inner="0.48"
               radius-outer="0.49"
               color="#2563EB"
+              scale="0 0 0"
               material="shader: flat; opacity: 0.4; transparent: true; depthWrite: false"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 100; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             ></a-ring>
 
             <!-- ====== CENTER BACK: HOLOGRAPHIC BACKDROP SCREEN ====== -->
@@ -162,7 +225,8 @@ export default function WebARPage() {
               color="#0A0F1D"
               scale="0 0 0"
               material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
-              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 200"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 350; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             >
               <!-- Glowing Border Frame (Z-shifted backward) -->
               <a-plane position="0 0 -0.05" width="1.64" height="0.84" color="#10B981" material="shader: flat; opacity: 0.5"></a-plane>
@@ -190,7 +254,8 @@ export default function WebARPage() {
               color="#0A0F1D"
               scale="0 0 0"
               material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
-              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 400"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 500; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             >
               <a-plane position="0 0 -0.05" width="0.72" height="0.47" color="#2563EB" material="shader: flat; opacity: 0.5"></a-plane>
               <a-text value="FEATURED WORK" position="0 0.15 0.05" align="center" width="0.6" color="#8896B3" font="roboto" wrap-count="15" material="shader: flat"></a-text>
@@ -212,7 +277,8 @@ export default function WebARPage() {
               color="#0A0F1D"
               scale="0 0 0"
               material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
-              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 500"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 650; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
             >
               <a-plane position="0 0 -0.05" width="0.72" height="0.47" color="#2563EB" material="shader: flat; opacity: 0.5"></a-plane>
               <a-text value="SKILLS & STACK" position="0 0.15 0.05" align="center" width="0.6" color="#8896B3" font="roboto" wrap-count="15" material="shader: flat"></a-text>
@@ -220,6 +286,24 @@ export default function WebARPage() {
               <a-text value="TailwindCSS & WebGL" position="0 -0.03 0.05" align="center" width="0.6" color="#38BDF8" font="roboto" wrap-count="18" material="shader: flat"></a-text>
               <a-text value="AI Tools & AR/VR" position="0 -0.11 0.05" align="center" width="0.6" color="#38BDF8" font="roboto" wrap-count="18" material="shader: flat"></a-text>
             </a-plane>
+
+            <!-- ====== VIDEO PANEL (INTRODUCTION) ====== -->
+            <a-video
+              id="video-screen"
+              class="clickable"
+              src="#intro-video"
+              position="2.2 0.5 -0.05"
+              rotation="-60 0 0"
+              width="1.6"
+              height="0.9"
+              scale="0 0 0"
+              material="shader: flat; opacity: 1; transparent: true; depthWrite: false"
+              animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 1400; startEvents: markerfound"
+              animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost, videoended"
+            >
+              <!-- Video Frame Glow (Z-shifted backward) -->
+              <a-plane position="0 0 -0.01" width="1.64" height="0.94" color="#38BDF8" material="shader: flat; opacity: 0.5"></a-plane>
+            </a-video>
 
             <!-- ====== FRONT ARC: INTERACTIVE SOCIAL MEDIA PODS (BOBBING ANIMATIONS) ====== -->
             <!-- Email Pod -->
@@ -235,7 +319,8 @@ export default function WebARPage() {
                 color="#EA4335"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 800"
+                animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 800; startEvents: markerfound"
+                animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
               >
                 <a-image class="clickable" data-url="mailto:abrahamseputra@gmail.com" src="https://api.iconify.design/mdi:email.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
@@ -254,7 +339,8 @@ export default function WebARPage() {
                 color="#0D1220"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 900"
+                animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 900; startEvents: markerfound"
+                animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
               >
                 <a-image class="clickable" data-url="https://github.com/AbramSin17" src="https://api.iconify.design/mdi:github.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
@@ -273,7 +359,8 @@ export default function WebARPage() {
                 color="#0A66C2"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1000"
+                animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1000; startEvents: markerfound"
+                animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
               >
                 <a-image class="clickable" data-url="https://www.linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323" src="https://api.iconify.design/mdi:linkedin.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
@@ -292,7 +379,8 @@ export default function WebARPage() {
                 color="#E1306C"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1100"
+                animation__in="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1100; startEvents: markerfound"
+                animation__out="property: scale; to: 0 0 0; dur: 300; easing: easeInQuad; startEvents: markerlost"
               >
                 <a-image class="clickable" data-url="https://www.instagram.com/abrhm_sin17/" src="https://api.iconify.design/mdi:instagram.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
@@ -305,8 +393,24 @@ export default function WebARPage() {
         </a-scene>
       `;
 
+      // Setup video ended callback to animate out
+      const videoEl = container.querySelector("#intro-video") as HTMLVideoElement;
+      const videoScreen = container.querySelector("#video-screen") as any;
+      const handleVideoEnded = () => {
+        if (videoScreen) {
+          videoScreen.emit("videoended");
+        }
+      };
+
+      if (videoEl) {
+        videoEl.addEventListener("ended", handleVideoEnded);
+      }
+
       return () => {
         container.removeEventListener("click", handleSceneClick);
+        if (videoEl) {
+          videoEl.removeEventListener("ended", handleVideoEnded);
+        }
       };
     }
   }, [arActive, scriptsLoaded, useCustomPattern]);
@@ -331,21 +435,45 @@ export default function WebARPage() {
     setLoadingAR(true);
     setErrorMsg(null);
     try {
+      // Clean up any leftover camera tracks and elements from previous sessions/hot-reloads
+      const oldVideos = document.querySelectorAll("video");
+      oldVideos.forEach((video) => {
+        const stream = video.srcObject as MediaStream;
+        if (stream) {
+          stream.getTracks().forEach((track) => track.stop());
+        }
+        video.remove();
+      });
+      const oldCanvases = document.querySelectorAll(".a-canvas");
+      oldCanvases.forEach((canvas) => canvas.remove());
+      const oldScenes = document.querySelectorAll("a-scene");
+      oldScenes.forEach((scene) => scene.remove());
+
       // 1. Load A-Frame (stable 1.2.0 version compatible with AR.js served locally)
       await loadScript("/aframe.min.js");
       // 2. Load AR.js (stable 3.4.5 version served locally)
       await loadScript("/aframe-ar.js");
 
-      // 3. Register custom component in A-Frame to dispatch window events
+      // 3. Register custom component in A-Frame to dispatch window events and trigger entrance animations
       if (window.AFRAME && !window.AFRAME.components["marker-handler"]) {
         window.AFRAME.registerComponent("marker-handler", {
           init: function (this: any) {
             const el = this.el;
             el.addEventListener("markerFound", () => {
               window.dispatchEvent(new CustomEvent("ar-marker-found"));
+              // Broadcast event to children to trigger stagger animations
+              const animEls = el.querySelectorAll("[animation__in]");
+              animEls.forEach((child: any) => {
+                child.emit("markerfound");
+              });
             });
             el.addEventListener("markerLost", () => {
               window.dispatchEvent(new CustomEvent("ar-marker-lost"));
+              // Broadcast event to children to reset / hide them
+              const animEls = el.querySelectorAll("[animation__out]");
+              animEls.forEach((child: any) => {
+                child.emit("markerlost");
+              });
             });
           },
         });
@@ -438,12 +566,15 @@ export default function WebARPage() {
         .animate-spin-slow {
           animation: spin-slow 10s linear infinite;
         }
-        html.ar-active, body.ar-active {
+        html.ar-active, body.ar-active, body.ar-active main {
           overflow: hidden !important;
           height: 100vh !important;
           width: 100vw !important;
           margin: 0 !important;
           padding: 0 !important;
+          background: transparent !important;
+          background-color: transparent !important;
+          background-image: none !important;
         }
         body.ar-active nav {
           display: none !important;

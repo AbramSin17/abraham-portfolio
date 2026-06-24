@@ -25,6 +25,14 @@ const certs: Cert[] = [
   },
   {
     id: 2,
+    title: "Certificate Of Completion",
+    issuer: "Google Developer Groups",
+    year: "2026",
+    type: "PDF",
+    file: "/certs/vibecoding.pdf",
+  },
+  {
+    id: 3,
     title: "Peserta Program Pembinaan Mahasiswa Wirausaha (P2MW) 2025",
     issuer: "Kementerian Pendidikan Tinggi, Sains, dan Teknologi RI",
     year: "2025",
@@ -32,7 +40,7 @@ const certs: Cert[] = [
     file: "/certs/p2mw.pdf",
   },
   {
-    id: 3,
+    id: 4,
     title: "Finalist Entrepreneurship Award VIII 2024",
     issuer: "LLDIKTI Wilayah X",
     year: "2024",
@@ -40,7 +48,7 @@ const certs: Cert[] = [
     file: "/certs/finalis EA VIII 2024.pdf",
   },
   {
-    id: 4,
+    id: 5,
     title: "Belajar Dasar AI",
     issuer: "Dicoding Indonesia",
     year: "2026",
@@ -48,7 +56,7 @@ const certs: Cert[] = [
     file: "/certs/dasarAI.pdf",
   },
   {
-    id: 5,
+    id: 6,
     title: "Introduction to Cybersecurity",
     issuer: "Cisco Networking Academy",
     year: "2026",
@@ -56,7 +64,7 @@ const certs: Cert[] = [
     file: "/certs/cybersecurity.pdf",
   },
   {
-    id: 6,
+    id: 7,
     title: "Panitia Diskusi Nasional Ekonomi Karbon",
     issuer: "Politeknik Wilmar Bisnis Indonesia",
     year: "2023",
@@ -143,7 +151,7 @@ export default function CredentialsPage() {
               <h3 className="font-sans font-semibold text-sm text-text-1 truncate group-hover:text-accent transition-colors duration-150">
                 {cert.title}
               </h3>
-              
+
               <div className="flex items-center justify-between">
                 <span className="font-sans text-xs text-text-2">{cert.issuer}</span>
                 <span className="font-sans text-[9px] tracking-wider font-bold text-accent bg-accent-dim border border-accent/20 px-1.5 py-0.5 rounded uppercase">
