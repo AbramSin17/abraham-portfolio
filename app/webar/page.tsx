@@ -331,10 +331,10 @@ export default function WebARPage() {
     setLoadingAR(true);
     setErrorMsg(null);
     try {
-      // 1. Load A-Frame (stable 1.2.0 version compatible with AR.js)
-      await loadScript("https://aframe.io/releases/1.2.0/aframe.min.js");
-      // 2. Load AR.js (stable 3.4.5 version)
-      await loadScript("https://raw.githack.com/AR-js-org/AR.js/3.4.5/aframe/build/aframe-ar.js");
+      // 1. Load A-Frame (stable 1.2.0 version compatible with AR.js served locally)
+      await loadScript("/aframe.min.js");
+      // 2. Load AR.js (stable 3.4.5 version served locally)
+      await loadScript("/aframe-ar.js");
 
       // 3. Register custom component in A-Frame to dispatch window events
       if (window.AFRAME && !window.AFRAME.components["marker-handler"]) {
