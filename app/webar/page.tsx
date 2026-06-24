@@ -124,153 +124,179 @@ export default function WebARPage() {
           <!-- Load custom pattern marker or preset Hiro dynamically -->
           ${markerTag}
             
-            <!-- ====== LEFT COLUMN: 3D GLB MODEL (Upright & Facing Camera) ====== -->
+            <!-- ====== CENTER 3D GLB MODEL ====== -->
             <a-gltf-model
               class="clickable"
               data-url="https://github.com/AbramSin17"
               src="/cool_man.glb"
-              position="-1 0.02 -0.5"
+              position="0 0.02 -0.1"
               rotation="-90 90 -90"
               scale="0 0 0"
               animation="property: scale; from: 0 0 0; to: 1.5 1.5 1.5; dur: 1000; easing: easeOutBack; delay: 300"
             ></a-gltf-model>
 
-            <!-- ====== RIGHT COLUMN: MAIN INTERACTIVE WIDGET (White Glass) ====== -->
-            <a-plane
-              position="1.6 0.01 -0.5"
+            <!-- ====== HOLOGRAPHIC CONCENTRIC RINGS (BASE) ====== -->
+            <a-ring
+              position="0 0.02 -0.1"
               rotation="-90 0 0"
-              width="1.8"
-              height="1.1"
-              color="#FFFFFF"
+              radius-inner="0.75"
+              radius-outer="0.77"
+              color="#10B981"
+              material="shader: flat; opacity: 0.6; transparent: true; depthWrite: false"
+            ></a-ring>
+            <a-ring
+              position="0 0.02 -0.1"
+              rotation="-90 0 0"
+              radius-inner="0.48"
+              radius-outer="0.49"
+              color="#2563EB"
+              material="shader: flat; opacity: 0.4; transparent: true; depthWrite: false"
+            ></a-ring>
+
+            <!-- ====== CENTER BACK: HOLOGRAPHIC BACKDROP SCREEN ====== -->
+            <a-plane
+              position="0 0.5 -0.7"
+              rotation="-60 0 0"
+              width="1.6"
+              height="0.8"
+              color="#0A0F1D"
               scale="0 0 0"
-              material="opacity: 0.55; transparent: true; roughness: 0.1; metalness: 0.1; shader: standard; side: double"
-              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 0"
+              material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
+              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 200"
             >
-              <!-- Outer Thin White Border -->
-              <a-plane
-                position="0 0 -0.002"
-                width="1.82"
-                height="1.12"
-                color="#FFFFFF"
-                material="shader: flat; opacity: 0.8"
-              ></a-plane>
-
-              <!-- --- Left Side of Card: Project Showcase Frame --- -->
-              <a-plane
-                class="clickable"
-                data-url="https://github.com/AbramSin17/abraham-portfolio"
-                position="-0.4 0 0.01"
-                width="0.85"
-                height="0.9"
-                color="#0A0F1D"
-                material="shader: flat"
-              >
-                <!-- Project Inner Frame -->
-                <a-plane position="0 0 0.001" width="0.81" height="0.86" color="#111827" material="shader: flat"></a-plane>
-                <a-text value="FEATURED WORK" position="-0.36 0.34 0.003" width="1.6" color="#8896B3" font="exo2bold"></a-text>
-                <a-text value="UMKMInsight" position="-0.36 0.22 0.003" width="2.2" color="#10B981" font="exo2bold"></a-text>
-                <a-text value="AI-powered analysis\ntool to help local\nbusinesses track sales,\npredict churn, and get\ngrowth insights." position="-0.36 -0.08 0.003" width="1.4" color="#D1D5DB" font="exo2italic"></a-text>
-                
-                <!-- Badge Button -->
-                <a-plane position="0 -0.32 0.003" width="0.65" height="0.12" color="#2563EB" material="shader: flat">
-                  <a-text value="VIEW PROJECT" align="center" position="0 0 0.002" width="1.2" color="#FFFFFF" font="exo2bold"></a-text>
-                </a-plane>
-              </a-plane>
-
-              <!-- --- Right Side of Card: Profile Details --- -->
-              <!-- Avatar Circle -->
-              <a-circle
-                position="0.45 0.32 0.01"
-                radius="0.14"
-                src="/abram.jpeg"
-                scale="0 0 0"
-                material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 500"
-              >
-                <a-ring color="#FFFFFF" radius-inner="0.135" radius-outer="0.145" position="0 0 0.002" material="shader: flat"></a-ring>
-              </a-circle>
+              <!-- Glowing Border Frame (Z-shifted backward) -->
+              <a-plane position="0 0 -0.05" width="1.64" height="0.84" color="#10B981" material="shader: flat; opacity: 0.5"></a-plane>
               
-              <!-- Name Text -->
-              <a-text
-                value="Abraham Sinaga"
-                position="0.45 0.12 0.01"
-                align="center"
-                width="2.2"
-                color="#07090F"
-                font="exo2bold"
-                scale="0 0 0"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 700"
-              ></a-text>
+              <!-- Profile Info (Z-shifted forward) -->
+              <a-text value="ABRAHAM SINAGA" position="0 0.25 0.05" align="center" width="1.4" color="#10B981" font="roboto" wrap-count="16" material="shader: flat"></a-text>
+              <a-text value="Software Engineering Student" position="0 0.12 0.05" align="center" width="1.3" color="#FFFFFF" font="roboto" wrap-count="30" material="shader: flat"></a-text>
+              
+              <!-- Blue Divider -->
+              <a-plane position="0 0 0.05" width="1.3" height="0.01" color="#2563EB" material="shader: flat"></a-plane>
 
-              <!-- Job Bio Details -->
-              <a-text
-                value="D4 Software Engineering\nstudent at WBI. Passionate\nabout Web development,\nAR/VR, and AI tools."
-                position="0.45 -0.16 0.01"
-                align="center"
-                width="1.3"
-                color="#374151"
-                font="exo2bold"
-                scale="0 0 0"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 850"
-              ></a-text>
+              <!-- Bio Texts -->
+              <a-text value="D4 Software Engineering at WBI" position="0 -0.12 0.05" align="center" width="1.2" color="#E5E7EB" font="roboto" wrap-count="32" material="shader: flat"></a-text>
+              <a-text value="Specializing in Web Development, AR/VR, and AI Tools." position="0 -0.24 0.05" align="center" width="1.2" color="#9CA3AF" font="roboto" wrap-count="40" material="shader: flat"></a-text>
+            </a-plane>
 
-              <!-- --- Bottom of Card: Colored Social Buttons Row --- -->
-              <!-- Email (Red) -->
+            <!-- ====== LEFT WING: FEATURED WORK WIDGET ====== -->
+            <a-plane
+              class="clickable"
+              data-url="https://github.com/AbramSin17/abraham-portfolio"
+              position="-0.8 0.3 -0.1"
+              rotation="-60 0 0"
+              width="0.7"
+              height="0.45"
+              color="#0A0F1D"
+              scale="0 0 0"
+              material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
+              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 400"
+            >
+              <a-plane position="0 0 -0.05" width="0.72" height="0.47" color="#2563EB" material="shader: flat; opacity: 0.5"></a-plane>
+              <a-text value="FEATURED WORK" position="0 0.15 0.05" align="center" width="0.6" color="#8896B3" font="roboto" wrap-count="15" material="shader: flat"></a-text>
+              <a-text value="UMKMInsight" position="0 0.05 0.05" align="center" width="0.6" color="#10B981" font="roboto" wrap-count="12" material="shader: flat"></a-text>
+              <a-text value="AI Sales & Growth Insights" position="0 -0.05 0.05" align="center" width="0.6" color="#D1D5DB" font="roboto" wrap-count="25" material="shader: flat"></a-text>
+              <a-plane position="0 -0.15 0.05" width="0.4" height="0.08" color="#2563EB" material="shader: flat">
+                <a-text value="PROJECTS" align="center" position="0 0 0.01" width="0.35" color="#FFFFFF" font="roboto" wrap-count="12"></a-text>
+              </a-plane>
+            </a-plane>
+
+            <!-- ====== RIGHT WING: SKILLS WIDGET ====== -->
+            <a-plane
+              class="clickable"
+              data-url="https://github.com/AbramSin17"
+              position="0.8 0.3 -0.1"
+              rotation="-60 0 0"
+              width="0.7"
+              height="0.45"
+              color="#0A0F1D"
+              scale="0 0 0"
+              material="opacity: 0.85; transparent: true; depthWrite: false; shader: flat"
+              animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 800; easing: easeOutBack; delay: 500"
+            >
+              <a-plane position="0 0 -0.05" width="0.72" height="0.47" color="#2563EB" material="shader: flat; opacity: 0.5"></a-plane>
+              <a-text value="SKILLS & STACK" position="0 0.15 0.05" align="center" width="0.6" color="#8896B3" font="roboto" wrap-count="15" material="shader: flat"></a-text>
+              <a-text value="Next.js & React" position="0 0.05 0.05" align="center" width="0.6" color="#38BDF8" font="roboto" wrap-count="18" material="shader: flat"></a-text>
+              <a-text value="TailwindCSS & WebGL" position="0 -0.03 0.05" align="center" width="0.6" color="#38BDF8" font="roboto" wrap-count="18" material="shader: flat"></a-text>
+              <a-text value="AI Tools & AR/VR" position="0 -0.11 0.05" align="center" width="0.6" color="#38BDF8" font="roboto" wrap-count="18" material="shader: flat"></a-text>
+            </a-plane>
+
+            <!-- ====== FRONT ARC: INTERACTIVE SOCIAL MEDIA PODS (BOBBING ANIMATIONS) ====== -->
+            <!-- Email Pod -->
+            <a-entity
+              position="-0.65 0.08 0.25"
+              rotation="-90 0 0"
+              animation="property: position; to: -0.65 0.14 0.25; dir: alternate; dur: 1600; loop: true; easing: easeInOutSine"
+            >
               <a-circle
                 class="clickable"
                 data-url="mailto:abrahamseputra@gmail.com"
-                position="-0.45 -0.72 0.01"
-                radius="0.08"
+                radius="0.1"
                 color="#EA4335"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: easeOutBack; delay: 1000"
+                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 800"
               >
-                <a-image class="clickable" data-url="mailto:abrahamseputra@gmail.com" src="https://api.iconify.design/mdi:email.svg?color=%23ffffff" position="0 0 0.002" width="0.1" height="0.1"></a-image>
+                <a-image class="clickable" data-url="mailto:abrahamseputra@gmail.com" src="https://api.iconify.design/mdi:email.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
+            </a-entity>
 
-              <!-- GitHub (Black) -->
+            <!-- GitHub Pod -->
+            <a-entity
+              position="-0.25 0.08 0.55"
+              rotation="-90 0 0"
+              animation="property: position; to: -0.25 0.14 0.55; dir: alternate; dur: 1800; loop: true; easing: easeInOutSine"
+            >
               <a-circle
                 class="clickable"
                 data-url="https://github.com/AbramSin17"
-                position="-0.15 -0.72 0.01"
-                radius="0.08"
+                radius="0.1"
                 color="#0D1220"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: easeOutBack; delay: 1100"
+                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 900"
               >
-                <a-image class="clickable" data-url="https://github.com/AbramSin17" src="https://api.iconify.design/mdi:github.svg?color=%23ffffff" position="0 0 0.002" width="0.1" height="0.1"></a-image>
+                <a-image class="clickable" data-url="https://github.com/AbramSin17" src="https://api.iconify.design/mdi:github.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
+            </a-entity>
 
-              <!-- LinkedIn (Blue) -->
+            <!-- LinkedIn Pod -->
+            <a-entity
+              position="0.25 0.08 0.55"
+              rotation="-90 0 0"
+              animation="property: position; to: 0.25 0.14 0.55; dir: alternate; dur: 2000; loop: true; easing: easeInOutSine"
+            >
               <a-circle
                 class="clickable"
-                data-url="https://linkedin.com/in/abrahamseputra"
-                position="0.15 -0.72 0.01"
-                radius="0.08"
+                data-url="https://www.linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323"
+                radius="0.1"
                 color="#0A66C2"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: easeOutBack; delay: 1200"
+                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1000"
               >
-                <a-image class="clickable" data-url="https://linkedin.com/in/abrahamseputra" src="https://api.iconify.design/mdi:linkedin.svg?color=%23ffffff" position="0 0 0.002" width="0.1" height="0.1"></a-image>
+                <a-image class="clickable" data-url="https://www.linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323" src="https://api.iconify.design/mdi:linkedin.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
+            </a-entity>
 
-              <!-- Instagram (Pink) -->
+            <!-- Instagram Pod -->
+            <a-entity
+              position="0.65 0.08 0.25"
+              rotation="-90 0 0"
+              animation="property: position; to: 0.65 0.14 0.25; dir: alternate; dur: 2200; loop: true; easing: easeInOutSine"
+            >
               <a-circle
                 class="clickable"
-                data-url="https://instagram.com"
-                position="0.45 -0.72 0.01"
-                radius="0.08"
+                data-url="https://www.instagram.com/abrhm_sin17/"
+                radius="0.1"
                 color="#E1306C"
                 scale="0 0 0"
                 material="shader: flat"
-                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 500; easing: easeOutBack; delay: 1300"
+                animation="property: scale; from: 0 0 0; to: 1 1 1; dur: 600; easing: easeOutBack; delay: 1100"
               >
-                <a-image class="clickable" data-url="https://instagram.com" src="https://api.iconify.design/mdi:instagram.svg?color=%23ffffff" position="0 0 0.002" width="0.1" height="0.1"></a-image>
+                <a-image class="clickable" data-url="https://www.instagram.com/abrhm_sin17/" src="https://api.iconify.design/mdi:instagram.svg?color=%23ffffff" position="0 0 0.01" width="0.12" height="0.12"></a-image>
               </a-circle>
-            </a-plane>
+            </a-entity>
 
           </a-marker>
           
@@ -659,7 +685,7 @@ export default function WebARPage() {
             </a>
 
             <a
-              href="https://linkedin.com/in/abrahamseputra"
+              href="https://www.linkedin.com/in/abraham-alex-tanuse-putra-sinaga-172b17323"
               target="_blank"
               rel="noopener noreferrer"
               className="text-text-2 hover:text-accent transition-colors duration-150 cursor-target flex items-center gap-1.5 font-bold uppercase tracking-wider"
