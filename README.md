@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Abraham Sinaga — Personal Portfolio
 
-## Getting Started
+> D4 Software Engineering Student · Politeknik WBI · Medan, Indonesia
 
-First, run the development server:
+A dark, elegant personal portfolio built with modern web technologies,
+featuring WebAR, interactive animations, and a fully responsive design.
 
+---
+
+## 🌐 Live
+
+[abrhmsin.dev](https://abrhmsin.dev)
+
+---
+
+## ✨ Features
+
+- **Loading Screen** — Orbit icon animation with progress bar
+- **Custom Cursor** — Target cursor with spin & lock-on effect
+- **Liquid Background** — Interactive fluid simulation on Home
+- **Page Transition** — Pixel dissolve effect between pages
+- **Animated Hero** — Typewriter name + rotating role text
+- **Floating Navbar** — Monogram logo + GitHub & LinkedIn links
+- **Sidebar Navigation** — Active page indicator
+- **WebAR Page** — Scan a marker to display interactive 3D 
+  business card in Augmented Reality
+- **Projects** — Split-panel list with detail view
+- **Skills** — Auto-scrolling marquee with hover pause
+- **Credentials** — Document archive grid with modal preview
+- **Contact** — Identity card + social links
+- **Fully Responsive** — Mobile-first design
+
+---
+
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|---|---|
+| Framework | Next.js 14 (App Router) |
+| Language | TypeScript |
+| Styling | Tailwind CSS |
+| Animation | Framer Motion, GSAP |
+| 3D / AR | A-Frame, AR.js, Three.js |
+| Deployment | Vercel |
+
+---
+
+## 🚀 Getting Started
+
+**Clone & install:**
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/AbramSin17/abraham-portfolio.git
+cd abraham-portfolio
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**Run development server:**
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Open [http://localhost:3000](http://localhost:3000)
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+**Build for production:**
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🔮 WebAR
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This portfolio includes a WebAR experience at `/webar`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**How to use:**
+1. Open `/webar` on your device
+2. Download the marker image
+3. Display the marker on another screen or print it
+4. Tap **Aktifkan Kamera AR** and allow camera access
+5. Point your camera at the marker
 
-## Deploy on Vercel
+The AR scene will display an interactive 3D business card
+with profile info, featured project, and social links.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+> Best experienced on mobile Chrome or Safari with rear camera.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 🎨 Design System
+
+```css
+--bg:          #07090F   /* Primary background */
+--bg-raised:   #0D1220   /* Surface / card */
+--accent:      #2563EB   /* Blue accent */
+--text-1:      #EDF2FF   /* Primary text */
+--text-2:      #8896B3   /* Secondary text */
+--text-3:      #4A5878   /* Muted text / labels */
+```
+
+Fonts: **Instrument Serif** (display) + **Inter** (body)
+
+---
+
+## 📬 Contact
+
+| | |
+|---|---|
+| Email | abrahamseputra@gmail.com |
+| Phone | 083827413433 |
+| Location | Medan, North Sumatra, Indonesia |
+| GitHub | [AbramSin17](https://github.com/AbramSin17) |
+| LinkedIn | [Abraham Sinaga](https://linkedin.com/in/abrahamseputra) |
+
+---
+
+<p align="center">
+  Built with ❤️ by Abraham Sinaga · 2026
+</p>
